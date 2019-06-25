@@ -70,7 +70,7 @@
             break;
         case ZFVideoQX:
             view.alpha = 0;
-            [self setQxUrl:delView.videos[player.currentPlayIndex] type:model.qxType palyer:player];
+            [self setQxUrl:delView.videos[player.currentPlayIndex] type:model.qxType palyer:player view:toolView arrays:view.videos];
             break;
         case ZFVideoBackAudio:
             [self audioPlayType:model.videoPlayType player:player delView:delView];
@@ -160,25 +160,57 @@
 }
 
 // 切换清晰度
-- (void)setQxUrl: (ZFCoverModel *)model type: (ZFVideoPlayQx)type palyer:(ZFPlayerController *)player {
+- (void)setQxUrl: (ZFCoverModel *)model type: (ZFVideoPlayQx)type palyer:(ZFPlayerController *)player view: (ZFBottomView *)view arrays: (NSArray *)arrays  {
     NSString *qxURl = @"";
+    NSString *text = @"标清";
     switch (type) {
         case ZFVideoPlayHeight:
             qxURl = model.heightUrl;
+            text = @"超清";
             break;
         case ZFVideoPlayMiddle:
             qxURl = model.playUrl;
+            text = @"高清";
             break;
         case ZFVideoPlaylow:
             qxURl = model.lowUrl;
+            text = @"标清";
             break;
         default:
             qxURl = model.playUrl;
             break;
     }
+    NSInteger index = player.currentPlayIndex;
     NSTimeInterval time = player.currentTime;
-    player.assetURL = [NSURL URLWithString:qxURl];
+    player.assetURLs = [self replaceUrlArray:arrays type:type];
+    [player playTheIndex:index];
     [self seekPostion:time player:player];
+    [view setQxText:text];
+}
+
+// 切换清晰度后 需要重新把所有的url替换一遍
+- (NSMutableArray *)replaceUrlArray: (NSArray *)array type: (ZFVideoPlayQx)type {
+    NSMutableArray *muArray = [NSMutableArray array];
+    for (ZFCoverModel *model in array) {
+        NSString *qxUrl = @"";
+        switch (type) {
+            case ZFVideoPlayHeight:
+                qxUrl = model.heightUrl;
+                break;
+            case ZFVideoPlayMiddle:
+                qxUrl = model.playUrl;
+                break;
+            case ZFVideoPlaylow:
+                qxUrl = model.lowUrl;
+                break;
+            default:
+                qxUrl = model.playUrl;
+                break;
+            }
+        NSURL *url = [NSURL URLWithString:qxUrl];
+        [muArray addObject:url];
+    }
+    return muArray;
 }
 
 // 切换URL 后快

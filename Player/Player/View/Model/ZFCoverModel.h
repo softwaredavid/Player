@@ -68,6 +68,7 @@ typedef NS_ENUM(NSInteger, ZFVideoTimerType) {
 @property (nonatomic, copy) NSString *text;
 // 唯一标识视频的id
 @property (nonatomic, copy) NSString *videoId;
+// 默认为播放普清的url
 @property (nonatomic, copy) NSString *playUrl; // 普清
 @property (nonatomic, copy) NSString *heightUrl; // 高清
 @property (nonatomic, copy) NSString *lowUrl; // 模糊

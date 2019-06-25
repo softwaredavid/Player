@@ -30,6 +30,7 @@ static NSString *kVideoCover = @"htt";
 @property (nonatomic, strong) RemoteTool *remoteTools;
 @property (nonatomic, strong) ZFCustomControlView1 *view;
 @property (nonatomic, strong) UIImageView *stopView;
+@property (nonatomic, assign) NSInteger lastPlayIndex;
 
 @end
 
@@ -41,6 +42,7 @@ static NSString *kVideoCover = @"htt";
     if (self) {
         _remoteTools = [[RemoteTool alloc] init];
         _remoteTools.delegate = self;
+        _lastPlayIndex = -1;
         [self addNotify];
     }
     return self;
@@ -86,15 +88,17 @@ static NSString *kVideoCover = @"htt";
         if (currentTime >= duration - 10) { // 播放结束从头开始
             current = 0;
         }
+        weakSelf.lastPlayIndex = weakSelf.player.currentPlayIndex;
         [ZFTimer saveTime:current key:weakSelf.curentModel.videoId];
     };
     
     self.player.playerReadyToPlay = ^(id<ZFPlayerMediaPlayback>  _Nonnull asset, NSURL * _Nonnull assetURL) {
+        weakSelf.curentModel = [weakSelf getCurrentPlayData];
         NSTimeInterval time = [ZFTimer getTime:weakSelf.curentModel.videoId];
         if (!weakSelf.curentModel.isContinuePlay) {
             time = 0;
         } else {
-            if (time > 1) {
+            if (time > 1 &&  weakSelf.player.currentPlayIndex != weakSelf.lastPlayIndex) {
                 NSString *textTime = [ZFUtilities convertTimeSecond:time];
                 [weakSelf.view showContinueView:textTime];
             }
@@ -137,9 +141,11 @@ static NSString *kVideoCover = @"htt";
 - (void)playWithDatas: (NSArray<ZFCoverModel *> *)datas index: (NSInteger)index  {
     NSInteger playIndex = index;
     _player.assetURLs = [self getUrlsArray:datas];
-    if (index > _player.assetURLs.count) {
+    if (index > _player.assetURLs.count || index < 0) {
         playIndex = 0;
     }
+    ZFCoverModel *model = datas[playIndex];
+    [self setTitle:model.text bgImg:model.img currentVideo:model];
     [self playIndex:playIndex];
     self.videos = datas;
 }

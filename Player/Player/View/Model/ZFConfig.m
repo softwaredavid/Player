@@ -131,6 +131,31 @@ static ZFConfig *_singleInstance = nil;
 }
 
 - (void)resetSelect {
-    
+    _currentQx = 0;
+    _rate = 1.0;
+    [_timesArray enumerateObjectsUsingBlock:^(ZFCoverModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj.text isEqualToString:@"不开启"]) {
+            obj.isSelected = YES;
+        } else {
+            obj.isSelected = NO;
+        }
+    }];
+    [_ratesArray enumerateObjectsUsingBlock:^(ZFCoverModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj.text isEqualToString:@"1.0 x"]) {
+            obj.isSelected = YES;
+        } else {
+            obj.isSelected = NO;
+        }
+    }];
+    [_moreArray enumerateObjectsUsingBlock:^(ZFCoverModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.isSelected = NO;
+    }];
+    [_qxArray enumerateObjectsUsingBlock:^(ZFCoverModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj.text isEqualToString:@"标清"]) {
+            obj.isSelected = YES;
+        } else {
+            obj.isSelected = NO;
+        }
+    }];
 }
 @end

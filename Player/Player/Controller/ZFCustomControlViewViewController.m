@@ -16,6 +16,7 @@ static NSString *kVideoCover = @"https://upload-images.jianshu.io/upload_images/
 @interface ZFCustomControlViewViewController ()
 
 @property (nonatomic, strong) ZFVideo *zf_video;
+@property (nonatomic) NSInteger index;
 
 @end
 
@@ -23,6 +24,7 @@ static NSString *kVideoCover = @"https://upload-images.jianshu.io/upload_images/
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _index = 1;
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIView *statusView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20)];
@@ -66,7 +68,28 @@ static NSString *kVideoCover = @"https://upload-images.jianshu.io/upload_images/
     mModel3.playUrl = @"http://cdnaliyunv.zhongye.net/201904/1d6a2530-9b86-4660-b575-4795185a8201/67187ef5-2fbd-4bb6-9d51-ad126fcc5e09/output.m3u8";
     mModel3.heightUrl = @"http://cdnaliyunv.zhongye.net/201904/1d6a2530-9b86-4660-b575-4795185a8201/67187ef5-2fbd-4bb6-9d51-ad126fcc5e09/output.m3u8";
     mModel3.lowUrl = @"http://cdnaliyunv.zhongye.net/201904/1d6a2530-9b86-4660-b575-4795185a8201/67187ef5-2fbd-4bb6-9d51-ad126fcc5e09/output.m3u8";
-    [_zf_video playWithData:mModel3];
+    
+    ZFCoverModel *mModel6 = [[ZFCoverModel alloc] init];
+    mModel6.text = @"分享";
+    mModel6.playUrl = @"http://cdnaliyunv.zhongye.net/201808/4e7ed0ee-ee51-4969-934d-1b6ba095f10b/f48de887-f078-41cf-a298-c34bef6488d2/output.m3u8";
+    mModel6.heightUrl = @"http://cdnaliyunv.zhongye.net/201808/4e7ed0ee-ee51-4969-934d-1b6ba095f10b/c6de202e-4148-49f0-8bc0-fa83e1d190f5/output.m3u8";
+    mModel6.lowUrl = @"http://cdnaliyunv.zhongye.net/201808/4e7ed0ee-ee51-4969-934d-1b6ba095f10b/97e12ca1-7452-4319-bed0-5e9d923b1d2d/output.m3u8";
+    
+    
+    ZFCoverModel *mModel4 = [[ZFCoverModel alloc] init];
+    mModel4.text = @"分享";
+    mModel4.playUrl = @"http://cdnaliyunv.zhongye.net/201904/1d6a2530-9b86-4660-b575-4795185a8201/67187ef5-2fbd-4bb6-9d51-ad126fcc5e09/output.m3u8";
+    mModel4.heightUrl = @"http://cdnaliyunv.zhongye.net/201904/1d6a2530-9b86-4660-b575-4795185a8201/67187ef5-2fbd-4bb6-9d51-ad126fcc5e09/output.m3u8";
+    mModel4.lowUrl = @"http://cdnaliyunv.zhongye.net/201904/1d6a2530-9b86-4660-b575-4795185a8201/67187ef5-2fbd-4bb6-9d51-ad126fcc5e09/output.m3u8";
+    
+    
+    ZFCoverModel *mModel5 = [[ZFCoverModel alloc] init];
+    mModel5.text = @"分享";
+    mModel5.playUrl = @"http://cdnaliyunv.zhongye.net/201808/61cef295-5b71-446e-b1e3-8824df960fbb/42cb9cad-a331-4ee9-925e-43796bd97596/output.m3u8";
+    mModel5.heightUrl = @"http://cdnaliyunv.zhongye.net/201808/61cef295-5b71-446e-b1e3-8824df960fbb/dbf89dfb-bb23-42d7-a58c-d5b84219c325/output.m3u8";
+    mModel5.lowUrl = @"http://cdnaliyunv.zhongye.net/201808/61cef295-5b71-446e-b1e3-8824df960fbb/2439d021-f646-4033-857d-fc27600acdde/output.m3u8";
+    [_zf_video playWithDatas:@[mModel6,mModel4,mModel5,mModel3] index:0];
+    [[ZFConfig shareInstance] resetSelect];
     // 配置清晰度 更多 倍速 默认数据
     _zf_video.qxs = [ZFConfig shareInstance].qxArray;
     _zf_video.moreMeuns = [ZFConfig shareInstance].moreArray;
@@ -76,15 +99,13 @@ static NSString *kVideoCover = @"https://upload-images.jianshu.io/upload_images/
     btn.frame = CGRectMake(100, 400, 40, 40);
     btn.backgroundColor = [UIColor redColor];
     [btn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
-    //[self.view addSubview:btn];
+    [self.view addSubview:btn];
 
 }
 
 - (void)btnClick {
-    ZFCoverModel *mModel3 = [[ZFCoverModel alloc] init];
-    mModel3.text = @"分享";
-    mModel3.playUrl = @"http://cdnaliyunv.zhongye.net/201904/1d6a2530-9b86-4660-b575-4795185a8201/67187ef5-2fbd-4bb6-9d51-ad126fcc5e09/output.m3u8";
-    [_zf_video playWithData:mModel3];
+    _index ++;
+    [_zf_video playIndex:_index % 3];
 }
 
 

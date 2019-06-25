@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setRateText: (NSString *)text;
 
+- (void)setQxText: (NSString *)text;
+
 - (void)sliderEnd;
 
 - (void)resetContent;

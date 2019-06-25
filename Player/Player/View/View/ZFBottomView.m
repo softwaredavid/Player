@@ -153,6 +153,10 @@
     [_speedBtn setTitle:text forState:UIControlStateNormal];
 }
 
+- (void)setQxText: (NSString *)text {
+    [_qxBtn setTitle:text forState:UIControlStateNormal];
+}
+
 - (void)setBufferValue:(CGFloat)bufferValue {
     self.slider.bufferValue = bufferValue;
 }

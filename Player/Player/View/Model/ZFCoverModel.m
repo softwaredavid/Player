@@ -19,4 +19,11 @@
     return self;
 }
 
+- (void)setPlayUrl:(NSString *)playUrl {
+    if (playUrl) {
+        _playUrl = playUrl;
+        _videoId = playUrl;
+    }
+}
+
 @end
