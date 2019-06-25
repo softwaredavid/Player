@@ -32,9 +32,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removePreviousCommand;
 
+- (void)addPrevousCommand;
+
+- (void)addNextCommond;
+
 - (void)removeAll;
 
 + (void)updateInfo: (RemoteModel *)model;
+
 
 @end
 

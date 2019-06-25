@@ -189,20 +189,29 @@ static NSString *kVideoCover = @"htt";
 
 #pragma 远程控制
 
-- (void)nextModel: (RemoteData)act {
-    [self.player playTheNext];
+- (void)addCommand {
     if ([self isLast]) {
         [_remoteTools removeNextCommand];
+    } else {
+        [_remoteTools addNextCommond];
     }
+    if ([self isFirst]) {
+        [_remoteTools removePreviousCommand];
+    } else {
+        [_remoteTools addPrevousCommand];
+    }
+}
+
+- (void)nextModel: (RemoteData)act {
+    [self.player playTheNext];
+    [self addCommand];
     RemoteModel *model = [PlayerTool covertData:[self getCurrentPlayData]];
     act(model);
 }
 
 - (void)previousModel: (RemoteData)act {
     [self.player playThePrevious];
-    if ([self isFirst]) {
-        [_remoteTools removePreviousCommand];
-    }
+    [self addCommand];
     RemoteModel *model = [PlayerTool covertData:[self getCurrentPlayData]];
     act(model);
 }
@@ -231,7 +240,7 @@ static NSString *kVideoCover = @"htt";
     model.totalTime = [NSString stringWithFormat:@"%f",_player.totalTime];
     model.currtentTime = [NSString stringWithFormat:@"%f",_player.currentTime];
     [RemoteTool updateInfo:model];
-    if (self.videos || self.videos.count <= 1) {
+    if (!self.videos || self.videos.count <= 1) {
         [_remoteTools removePreviousCommand];
         [_remoteTools removeNextCommand];
     }

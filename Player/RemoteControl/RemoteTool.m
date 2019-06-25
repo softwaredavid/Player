@@ -15,14 +15,8 @@
 - (void)addRemote {
     MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
     
-    MPRemoteCommand *previousCommand = [commandCenter previousTrackCommand];
-    [previousCommand setEnabled:YES];
-    [previousCommand addTarget:self action:@selector(previous)];
-    
-    
-    MPRemoteCommand *nextCommand = [commandCenter nextTrackCommand];
-    [nextCommand setEnabled:YES];
-    [nextCommand addTarget:self action:@selector(next)];
+    [self addNextCommond];
+    [self addPrevousCommand];
     
     MPRemoteCommand *pauseCommand = [commandCenter pauseCommand];
     [pauseCommand setEnabled:YES];
@@ -31,6 +25,20 @@
     MPRemoteCommand *playCommand = [commandCenter playCommand];
     [playCommand setEnabled:YES];
     [playCommand addTarget:self action:@selector(play)];
+}
+
+- (void)addPrevousCommand {
+    MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+    MPRemoteCommand *previousCommand = [commandCenter previousTrackCommand];
+    [previousCommand setEnabled:YES];
+    [previousCommand addTarget:self action:@selector(previous)];
+}
+
+- (void)addNextCommond {
+    MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+    MPRemoteCommand *nextCommand = [commandCenter nextTrackCommand];
+    [nextCommand setEnabled:YES];
+    [nextCommand addTarget:self action:@selector(next)];
 }
 
 - (void)removeNextCommand {
