@@ -13,7 +13,9 @@
 
 @protocol ZFVideoDelegate <NSObject>
 
-- (void)currentPlayIndex: (NSInteger)playIndex;
+- (void)currentPlayData: (ZFCoverModel *)data index: (NSInteger)index;
+// 除了后台播放 和 定时播放之外 其他所有的辅助功能走此代理方法
+- (void)videoOtherFunc: (ZFCoverModel *)model;
 
 @end
 

@@ -65,6 +65,11 @@ static NSString *kVideoCover = @"htt";
     return self;
 }
 
+- (void)otherFunc: (NSNotification *)notify {
+    ZFCoverModel *model = notify.userInfo[@"objc"];
+    [self.delegate videoOtherFunc:model];
+}
+
 #pragma 播放器配置
 
 - (void)setTitle: (NSString *)title bgImg: (NSString *)bgImg currentVideo: (ZFCoverModel *)model {
@@ -103,6 +108,7 @@ static NSString *kVideoCover = @"htt";
                 [weakSelf.view showContinueView:textTime];
             }
         }
+        [weakSelf.delegate currentPlayData:weakSelf.curentModel index:weakSelf.player.currentPlayIndex];
         [weakSelf.player seekToTime:time completionHandler:^(BOOL finished) {}];
     };
     
@@ -112,7 +118,6 @@ static NSString *kVideoCover = @"htt";
            // [weakSelf replayView];
         } else {
             [weakSelf.player playTheNext];
-            [weakSelf.delegate currentPlayIndex:weakSelf.player.currentPlayIndex];
         }
     };
 }
@@ -232,6 +237,7 @@ static NSString *kVideoCover = @"htt";
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(leaveBack)
                                                  name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(otherFunc:) name:@"com.zf.other.func" object:nil];
 }
 
 - (void)enterBack {

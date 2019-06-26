@@ -60,16 +60,16 @@ static ZFConfig *_singleInstance = nil;
         mModel1.img = @"zf_bg";
         
         
-        ZFCoverModel *mModel2 = [[ZFCoverModel alloc] init];
-        mModel2.type = ZFVideoEve;
-        mModel2.text = @"课程评价";
-        mModel2.img = @"zf_pingjia";
+//        ZFCoverModel *mModel2 = [[ZFCoverModel alloc] init];
+//        mModel2.type = ZFVideoEve;
+//        mModel2.text = @"课程评价";
+//        mModel2.img = @"zf_pingjia";
         
         ZFCoverModel *mModel3 = [[ZFCoverModel alloc] init];
         mModel3.type = ZFVideoShare;
         mModel3.text = @"分享";
         mModel3.img = @"zf_share";
-        _moreArray = @[mModel,mModel1,mModel2,mModel3];
+        _moreArray = @[mModel,mModel1,/*mModel2,*/mModel3];
     }
     return _moreArray;
 }

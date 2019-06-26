@@ -165,17 +165,14 @@
             self.type = ZFCoverViewAudio;
             [self handleVideo:@"音频后台播放"];
             break;
-        case ZFVideoEve:
-            self.type = ZFCoverViewEve;
-            break;
-        case ZFVideoShare:
-            self.type = ZFCoverViewShare;
-            break;
         case ZFVideoTimer:
             [self timerPlay];
             self.type = ZFCoverViewTimer;
             break;
         default:
+            self.alpha = 0;
+            [self disMiss];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"com.zf.other.func" object:nil userInfo:@{@"objc":self.currentModel}];
             break;
     }
 }
