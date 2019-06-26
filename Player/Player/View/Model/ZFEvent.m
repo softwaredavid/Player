@@ -56,8 +56,13 @@
 
 
 - (void)back: (ZFPlayerController *)player {
+    UIViewController *topVc = [ZFEvent currentViewController];
     [player stop];
-    [[ZFEvent currentViewController].navigationController popViewControllerAnimated:YES];
+    if ([topVc presentingViewController] != nil) {
+        [[ZFEvent currentViewController] dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [[ZFEvent currentViewController].navigationController popViewControllerAnimated:YES];
+    }
 }
 
 // 各种功能处理
