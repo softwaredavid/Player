@@ -114,8 +114,8 @@ static NSString *kVideoCover = @"htt";
     
     self.player.playerDidToEnd = ^(id<ZFPlayerMediaPlayback>  _Nonnull asset) {
         if ([weakSelf isLast]) {
-           // [weakSelf.player stop];
-           // [weakSelf replayView];
+            [weakSelf.player stop];
+            [weakSelf replayView];
         } else {
             [weakSelf.player playTheNext];
         }
@@ -303,7 +303,7 @@ static NSString *kVideoCover = @"htt";
     replay.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
     __weak typeof(self) weakSelf = self;
     replay.replay = ^{
-        [weakSelf playWithData:weakSelf.curentModel];
+        [weakSelf playIndex:0];
     };
     [_stopView addSubview:replay];
 }
